@@ -13,7 +13,7 @@ export const autenticadoGuard: CanActivateFn = (route, state) => {
 
   if (!tieneToken) {
     // Si no tiene token, redirigir al login
-    return router.createUrlTree(['/autenticacion/iniciar-sesion']);
+    return router.createUrlTree(['/iniciar-sesion']);
   } 
 
   // Si tiene token, verificar si ya tenemos los datos del usuario
@@ -23,7 +23,7 @@ export const autenticadoGuard: CanActivateFn = (route, state) => {
         return servicioAutenticacion.DatosUsuario().pipe(
           tap((datos) => servicioAutenticacion.datosAutenticado = datos), // Guardar los datos
           map(() => true), // Permitir el acceso
-          catchError(() => of(router.createUrlTree(['/autenticacion/iniciar-sesion'])))
+          catchError(() => of(router.createUrlTree(['/iniciar-sesion'])))
         );
       } else {
         return of(true); // Ya tenemos los datos, permitir el acceso

@@ -5,7 +5,7 @@ import { noAutenticadoGuard } from './core/guards/no-autenticado.guard';
 
 export const routes: Routes = [
     {
-        path: 'autenticacion',
+        path: '',
         canActivate: [noAutenticadoGuard],
         loadChildren: () => import('./pages/autenticacion/autenticacion.routes').then(m => m.AUTENTICACION_ROUTES)
     },
