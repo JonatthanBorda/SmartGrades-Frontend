@@ -1,4 +1,4 @@
 export const environment = {
-    apiUrlBase: 'https://backendseriesanimadas.azurewebsites.net',
+    apiUrlBase: '',
     production: true
 };
