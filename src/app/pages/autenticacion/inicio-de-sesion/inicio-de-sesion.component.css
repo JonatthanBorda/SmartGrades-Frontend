@@ -1,0 +1,16 @@
+.borde-custom {
+    border: 4px solid black;
+}
+
+.fondo2 {
+    /*background-color: #282833;*/
+    /*background: url('/assets/fondo-inicio.jpg');*/
+    background: url('https://img.freepik.com/foto-gratis/vista-elevada-rollo-pelicula-camara-videocamara-sobre-palomitas_23-2148188125.jpg?t=st=1743442292~exp=1743445892~hmac=de52494e38674c9a62ae155a9e478b408d42c372e45c6f7d0f07d23844a269e5&w=1060');
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen en la pantalla */
+}
+
+.error {
+    border: 2px solid red;
+  }

@@ -1,0 +1,51 @@
+<p-dialog header="{{titulo }}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="cerrarDialog()">
+    <span class="p-text-secondary block mb-5!">{{tipo}} informacion de director.</span>
+    
+    <form [formGroup]="formularioDirector" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 ">
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Nombre
+            <input type="text" formControlName="nombre" 
+            placeholder="Ingrese el nombre del director"
+            class="w-full border-2 border-gray-400 rounded-md p-2! font-normal" 
+            [ngClass]="{'border-red-500': this.campoInvalido('nombre')}"
+            />
+        </label>
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Apellido
+            <input type="text" formControlName="apellido" 
+            placeholder="Ingrese el apellido del director"
+            class="w-full border-2 border-gray-400 rounded-md p-2! font-normal" 
+            [ngClass]="{'border-red-500': this.campoInvalido('apellido')}"
+            />
+        </label>
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Pais
+            <p-select [options]="paises"  formControlName="pais" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecciona pais" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
+            [ngClass]="{'border-red-500!': this.campoInvalido('pais')}"
+            >
+                <ng-template #selectedItem let-selectedOption>
+                    <div class="flex items-center gap-2">
+                        <div>{{ selectedOption.nombre }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-pais #item>
+                    <div class="flex items-center gap-2">
+                        <div>{{ pais.nombre }}</div>
+                    </div>
+                </ng-template>
+            </p-select>
+            
+        </label>
+
+        <div class="flex justify-end gap-2 mt-4!">
+            <p-button type="button" label="Cancel" severity="secondary" (click)="cerrarDialog()" />
+            <p-button 
+                type="submit" label="{{tipo}} " 
+                styleClass="bg-gray-800! border-none! text-white! hover:bg-gray-700!"    
+            />
+        </div>
+    </form>
+    
+</p-dialog>

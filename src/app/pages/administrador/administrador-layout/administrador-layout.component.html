@@ -1,0 +1,27 @@
+<div class="flex h-screen">
+    <!-- Menú lateral -->
+    @if(!isMenuVisible){
+        <app-menu-lateral-administrador [isMenuVisible]="isMenuVisible" (toggleMenu)="toggleMenu()" />
+    }
+
+    <!-- Overlay que aparece al abrir el menú -->
+    <div (click)="toggleMenu()" [ngClass]="{'bg-black opacity-10 visible fixed w-full h-full z-40 md:invisible': !isMenuVisible, 'invisible w-0': isMenuVisible}">
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="bg-gray-200/40 px-3! py-2! gap-3 w-full flex flex-col " 
+    [ngClass]="{'overflow-auto relative': this.cargando()}">
+        <!-- Encabezado de usuario -->
+        <app-encabezado-administrador (toggleMenu)="toggleMenu()" class="" />
+
+        <!-- Contenido dinámico cargado en el router-outlet -->
+        <div class="flex-grow bg-white overflow-auto relative p-3! rounded-xl shadow-md h-full">
+            <router-outlet></router-outlet>
+            
+        </div>
+
+        @if (this.cargando()) {
+            <app-pagina-de-carga />
+        }
+    </div>
+</div>

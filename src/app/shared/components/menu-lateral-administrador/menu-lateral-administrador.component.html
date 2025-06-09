@@ -1,0 +1,41 @@
+<div
+  [ngClass]="{
+    'fixed z-50 md:static md:visible w-64': !isMenuVisible,
+    'invisible w-0': isMenuVisible
+  }"
+  class="bg-gray-800 h-svh w-64 flex flex-col gap-2"
+>
+  <div class="p-4! flex justify-center">
+    <a
+      [routerLink]="'/dashboard'"
+      (click)="clearFocus()"
+      class="text-white font-bold text-4xl text-center py-2!"
+    >
+      SeriesApp
+    </a>
+    <button
+      class="self-start absolute -right-0 mr-2! cursor-pointer hover:bg-gray-700 rounded-full p-1!"
+      [ngClass]="{
+        'visible md:invisible': !isMenuVisible,
+        invisible: isMenuVisible
+      }"
+      (click)="toggleMenu.emit()"
+    >
+      <i class="pi pi-times text-white text-lg"></i>
+    </button>
+  </div>
+  <div class="h-svh">
+    
+    <p-menu [model]="items" styleClass="bg-transparent! border-none! text-white!">
+      <ng-template #item let-item>
+        <a 
+        [routerLink]="item.routerLink"
+        pRipple class="flex items-center p-menu-item-link text-white! hover:text-gray-800! focus:text-gray-800!">
+            <span [class]="item.icon"></span>
+            <span class="ml-2">{{ item.label }}</span>
+            
+        </a>
+    </ng-template>
+  </p-menu>
+  </div>
+</div>

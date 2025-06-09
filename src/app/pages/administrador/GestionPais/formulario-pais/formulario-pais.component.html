@@ -1,0 +1,23 @@
+<p-dialog header="{{titulo }}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="cerrarDialog()">
+    <span class="p-text-secondary block mb-5!">{{tipo}} informacion de pais.</span>
+    
+    <form [formGroup]="formularioPais" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 ">
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Nombre
+            <input type="text" formControlName="nombre" 
+            placeholder="Ingrese el nombre del genero"
+            class="w-full border-2 border-gray-400 rounded-md p-2! font-normal" 
+            [ngClass]="{'border-red-500': this.campoInvalido('nombre')}"
+            />
+        </label>
+
+        <div class="flex justify-end gap-2 mt-4!">
+            <p-button type="button" label="Cancel" severity="secondary" (click)="cerrarDialog()" />
+            <p-button 
+                type="submit" label="{{tipo}} " 
+                styleClass="bg-gray-800! border-none! text-white! hover:bg-gray-700!"    
+            />
+        </div>
+    </form>
+    
+</p-dialog>

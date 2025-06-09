@@ -1,0 +1,118 @@
+<p-dialog header="{{titulo }}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="cerrarDialog()">
+    <span class="p-text-secondary block mb-5!">{{tipo}} informacion de pelicula.</span>
+    
+    <form [formGroup]="formularioPelicula" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 ">
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Titulo
+            <input type="text" formControlName="titulo" 
+            placeholder="Ingrese el titulo de la pelicula"
+            class="w-full border-2 border-gray-400 rounded-md p-2! font-normal" 
+            [ngClass]="{'border-red-500': this.campoInvalido('titulo')}"
+            />
+        </label>
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Reseña
+            <input type="text" formControlName="resena" 
+            placeholder="Ingrese la reseña de la pelicula"
+            class="w-full border-2 border-gray-400 rounded-md p-2! font-normal" 
+            [ngClass]="{'border-red-500': this.campoInvalido('resena')}"
+            />
+        </label>
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Pais
+            <p-select [options]="paises"  formControlName="pais" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecciona pais" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
+            [ngClass]="{'border-red-500!': this.campoInvalido('pais')}"
+            >
+                <ng-template #selectedItem let-selectedOption>
+                    <div class="flex items-center gap-2">
+                        <div>{{ selectedOption.nombre }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-pais #item>
+                    <div class="flex items-center gap-2">
+                        <div>{{ pais.nombre }}</div>
+                    </div>
+                </ng-template>
+            </p-select>
+            
+        </label>
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Director
+            <p-select [options]="directores"  formControlName="director" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecciona director" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
+            [ngClass]="{'border-red-500!': this.campoInvalido('director')}"
+            >
+                <ng-template #selectedItem let-selectedOption>
+                    <div class="flex items-center gap-2">
+                        <div>{{ selectedOption.nombre }}</div>
+                    </div>
+                </ng-template>
+                <ng-template let-director #item>
+                    <div class="flex items-center gap-2">
+                        <div>{{ director.nombre }}</div>
+                    </div>
+                </ng-template>
+            </p-select>
+            
+        </label>
+
+        <label for="" class="flex flex-col gap-2 font-bold">
+            Imagen de Portada
+            <input type="text" formControlName="imagenDePortada" 
+            placeholder="Ingrese la imagen de la pelicula"
+            class="w-full border-2 border-gray-400 rounded-md p-2! font-normal" 
+            [ngClass]="{'border-red-500': this.campoInvalido('imagenDePortada')}"
+            />
+        </label>
+
+        <label for="CodigoDeTrailerEnYoutube" class="flex flex-col gap-2 font-bold">
+            Código del Trailer
+            <input 
+                formControlName="CodigoDeTrailerEnYoutube" 
+                placeholder="Ingrese la reseña de la película"
+                class="w-full border-2 border-gray-400 rounded-md p-2! font-normal " 
+                [ngClass]="{'border-red-500': this.campoInvalido('CodigoDeTrailerEnYoutube')}"
+            />
+        </label>
+
+        <label for="generos" class="flex flex-col gap-2 font-bold">
+            Géneros
+            <p-multiSelect 
+                formControlName="generos" 
+                [options]="generos" 
+                optionLabel="nombre"
+                placeholder="Selecciona géneros"
+                class="w-full border-2 border-gray-400 rounded-md font-normal"
+                appendTo="body"
+                [ngClass]="{'border-red-500!': this.campoInvalido('generos')}"
+            ></p-multiSelect>
+        </label>
+        
+        <label for="actores" class="flex flex-col gap-2 font-bold">
+            Actores
+            <p-multiSelect 
+                formControlName="actores" 
+                [options]="actores" 
+                optionLabel="nombre"
+                placeholder="Selecciona actores"
+                class="w-full border-2 border-gray-400 rounded-md font-normal"
+                appendTo="body"
+                [ngClass]="{'border-red-500!': this.campoInvalido('actores')}"
+            ></p-multiSelect>
+        </label>
+        
+        
+
+        <div class="flex justify-end gap-2 mt-4!">
+            <p-button type="button" label="Cancel" severity="secondary" (click)="cerrarDialog()" />
+            <p-button 
+                type="submit" label="{{tipo}} " 
+                styleClass="bg-gray-800! border-none! text-white! hover:bg-gray-700!"    
+            />
+        </div>
+    </form>
+    
+</p-dialog>

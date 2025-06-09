@@ -1,0 +1,25 @@
+<header class="w-full flex justify-between items-center z-50 p-2!">
+    <div>
+        <button (click)="toggleMenu.emit()"
+            class="border-none py-1! px-3! text-lg text-gray-800 font-light bg-gray-300/50 lg:hover:bg-gray-800 lg:hover:text-white cursor-pointer rounded-full" 
+        >
+            <i class="pi pi-bars"></i>
+        </button>
+    </div>
+
+    <div class="flex items-center gap-2">
+        <span>{{nombre}}</span>
+
+        <div class="flex items-center space-x-4 border-none">
+            <p-menu #menu [model]="items" [popup]="true"></p-menu>
+            <button 
+                (click)="menu.toggle($event)" 
+                class="flex items-center focus:outline-none border-none bg-fondo-gris">
+              <p-avatar 
+                label={{inicial}} 
+                styleClass="cursor-pointer " 
+                [style]="{ 'background-color': '#dee9fc', color: '#1a2551' }" />
+            </button>
+          </div>
+    </div>
+</header>
