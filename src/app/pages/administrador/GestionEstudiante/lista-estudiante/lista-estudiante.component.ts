@@ -46,20 +46,18 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
   estudiante!: Estudiante | null;
 
   listaPaginada: ListaPaginada<Estudiante> = {
-    elementos: [],
-    pagina: 1,
-    tamanoPagina: 10,
-    cantidadTotal: 120,
-    tieneSiguientePagina: false,
-    tienePaginaAnterior: false
+    items: [],
+    page: 1,
+    pageSize: 10,
+    totalCount: 120
   };
 
   consulta: consultaFiltrar = {
-    terminoDeBusqueda: '',
-    ordenarColumna: 'asc',
-    OrdenarLista: 'id',
-    pagina: 1,
-    tamanoPagina: 10,
+    nombre: '',
+    orderBy: 'Id',
+    desc: false,
+    page: 1,
+    pageSize: 10,
   };
 
   private busquedaSubject$ = new Subject<string>();
@@ -95,15 +93,13 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     )
     .subscribe(termino => {
-      this.consulta.terminoDeBusqueda = termino;
-      this.consulta.pagina = 1; // resetea a la primera página cuando cambia la búsqueda
+      this.consulta.nombre = termino;
+      this.consulta.page = 1; // resetea a la primera página cuando cambia la búsqueda
       this.cargarConFiltro();
     });
   }
 
   cargarConFiltro() {
-    console.log('Cargando con filtro:', this.consulta);
-
     this.servicioEstudiante
       .ListaFiltrada(this.consulta)
       .pipe(takeUntil(this.unsubscribe$))
@@ -164,7 +160,7 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
           detail: 'Estudiante Eliminado',
         });
 
-        this.servicioEstudiante.notifyUpdate(estudiante);
+        this.servicioEstudiante.notifyRegistro(estudiante);
       },
     });
   }
@@ -189,12 +185,12 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
   
     const nuevaPagina = (this.first / this.rows) + 1;
     
-    if (nuevaPagina === this.consulta.pagina) {
+    if (nuevaPagina === this.consulta.page) {
       return;
     }
 
-    this.consulta.pagina = nuevaPagina;
-    this.consulta.tamanoPagina = event.rows;
+    this.consulta.page = nuevaPagina;
+    this.consulta.pageSize = event.rows;
   
     this.cargarConFiltro();
   }

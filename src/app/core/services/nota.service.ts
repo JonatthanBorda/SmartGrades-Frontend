@@ -10,6 +10,6 @@ export class NotaService extends GenericoService<Nota, NotaComando> {
 
   constructor(http: HttpClient) { 
     super(http);
-    this.endpoint = "nota";
+    this.endpoint = "Notas";
   }
 }

@@ -13,7 +13,7 @@
         </label>
 
         <label for="" class="flex flex-col gap-2 font-bold">
-            Pais
+            Profesor
             <p-select [options]="profesores"  formControlName="profesor" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecciona profesor" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
             [ngClass]="{'border-red-500!': this.campoInvalido('profesor')}"
             >
@@ -32,7 +32,7 @@
         </label>
 
         <label for="" class="flex flex-col gap-2 font-bold">
-            Director
+            Estudiante
             <p-select [options]="estudiantes"  formControlName="estudiante" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecciona estudiante" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
             [ngClass]="{'border-red-500!': this.campoInvalido('estudiante')}"
             >
