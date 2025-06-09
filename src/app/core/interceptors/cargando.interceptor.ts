@@ -17,7 +17,7 @@ export const cargandoInterceptor: HttpInterceptorFn = (req, next) => {
   // Mostrar la solicitud en la consola
   //console.log('Solicitud HTTP:', req.url);
 
-  cargando.mostrar();
+  //cargando.mostrar();
 
   return next(req).pipe(
     finalize(() => {

@@ -11,29 +11,22 @@ export const ListaDeOpcionesMenu: ListaOpciones[] = [
     {
       id: 2,
       icon: "pi pi-tags", // icon de Género
-      label: "Género",
-      url: "/dashboard/genero",
+      label: "Profesor",
+      url: "/dashboard/profesor",
       opciones: []
     },
     {
       id: 3,
       icon: "pi pi-globe", // icon de País
-      label: "País",
-      url: "/dashboard/pais",
+      label: "Estudiante",
+      url: "/dashboard/estudiante",
       opciones: []
     },
     {
       id: 4,
       icon: "pi pi-user", // icon de Actor
-      label: "Actor",
-      url: "/dashboard/actor",
-      opciones: []
-    },
-    {
-      id: 5,
-      icon: "pi pi-video", // icon de Director
-      label: "Director",
-      url: "/dashboard/director",
+      label: "Notas",
+      url: "/dashboard/nota",
       opciones: []
     },
     {
@@ -41,13 +34,6 @@ export const ListaDeOpcionesMenu: ListaOpciones[] = [
       icon: "pi pi-users", // icon de Usuario
       label: "Usuario",
       url: "/dashboard/usuario",
-      opciones: []
-    },
-    {
-      id: 7, // Cambié el ID duplicado
-      icon: "pi pi-video", // icon de Película
-      label: "Película",
-      url: "/dashboard/pelicula",
       opciones: []
     }
 ];

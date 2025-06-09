@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { ListaPeliculaComponent } from "../GestionPelicula/lista-pelicula/lista-pelicula.component";
+import { ListaNotaComponent } from '../GestionNota/lista-nota/lista-nota.component';
 
 @Component({
   selector: 'app-inicio-dashboard',
-  imports: [ListaPeliculaComponent],
+  imports: [ListaNotaComponent],
   templateUrl: './inicio-dashboard.component.html',
   styleUrl: './inicio-dashboard.component.css'
 })

@@ -11,7 +11,7 @@ export const routes: Routes = [
     },
     {
         path: 'dashboard',
-        canActivate: [autenticadoGuard],
+        //canActivate: [autenticadoGuard],
         loadChildren: () => import('./pages/administrador/administrador.routes').then(m => m.ADMINISTRADOR_ROUTES)
     },
     {

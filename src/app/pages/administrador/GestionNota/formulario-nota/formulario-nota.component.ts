@@ -71,7 +71,7 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
       id: [''],
       nombre: ['', Validators.required],
       profesor: ['', Validators.required],
-      estudainte: ['', Validators.required],
+      estudiante: ['', Validators.required],
       valor: ['', Validators.required]
     });
   }
@@ -108,7 +108,7 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
         id: formValues.id,
         nombre: formValues.nombre,
         idProfesor: formValues.profesor.id ?? '',
-        idEstudiante: formValues.estudainte.id ?? '',
+        idEstudiante: formValues.estudiante.id ?? '',
         valor: formValues.valor
       };
 
@@ -117,7 +117,7 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
       const nuevaNota: NotaComando = {
         nombre: formValues.nombre,
         idProfesor: formValues.profesor.id ?? '',
-        idEstudiante: formValues.estudainte.id ?? '',
+        idEstudiante: formValues.estudiante.id ?? '',
         valor: formValues.valor
       };
       

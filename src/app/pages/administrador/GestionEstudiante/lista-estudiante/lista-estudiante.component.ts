@@ -9,15 +9,17 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
-import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { FormularioEstudianteComponent } from '../formulario-estudiante/formulario-estudiante.component';
 import { EstudianteService } from '../../../../core/services/estudiante.service';
 import { Estudiante, EstudianteComando } from '../../../../core/models/estudiante.model';
+import { ListaPaginada } from '../../../../core/models/listaPaginada.model';
+import { consultaFiltrar } from '../../../../core/models/consultaFiltrar.model';
 
 
 @Component({
-  selector: 'app-lista-pais',
+  selector: 'app-lista-estudiante',
   imports: [
       TableModule,
       CommonModule,
@@ -30,8 +32,8 @@ import { Estudiante, EstudianteComando } from '../../../../core/models/estudiant
       FormsModule,
       FormularioEstudianteComponent,
     ],
-  templateUrl: './lista-pais.component.html',
-  styleUrl: './lista-pais.component.css'
+  templateUrl: './lista-estudiante.component.html',
+  styleUrl: './lista-estudiante.component.css'
 })
 export class ListaEstudianteComponent implements OnInit, OnDestroy {
   listaEstudiantes: Estudiante[] = [];
@@ -43,6 +45,24 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
   visibleFormulario: boolean = false;
   estudiante!: Estudiante | null;
 
+  listaPaginada: ListaPaginada<Estudiante> = {
+    elementos: [],
+    pagina: 1,
+    tamanoPagina: 10,
+    cantidadTotal: 120,
+    tieneSiguientePagina: false,
+    tienePaginaAnterior: false
+  };
+
+  consulta: consultaFiltrar = {
+    terminoDeBusqueda: '',
+    ordenarColumna: 'asc',
+    OrdenarLista: 'id',
+    pagina: 1,
+    tamanoPagina: 10,
+  };
+
+  private busquedaSubject$ = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -56,40 +76,46 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.servicioEstudiante
-      .ListarTodos()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (resp: Estudiante[]) => {
-          this.listaEstudiantes = resp;
-        },
-      });
 
-    this.servicioEstudiante.Updated$.pipe(takeUntil(this.unsubscribe$)).subscribe(
-      (updatedPais) => {
-        if (updatedPais) {
-          this.servicioEstudiante
-            .ListarTodos()
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Estudiante[]) => {
-              this.listaEstudiantes = resp;
-            });
-        }
-      },
-    );
+    this.cargarConFiltro();
 
     this.servicioEstudiante.Registro$.pipe(takeUntil(this.unsubscribe$)).subscribe(
       (registroPais) => {
         if (registroPais) {
-          this.servicioEstudiante
-            .ListarTodos()
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Estudiante[]) => {
-              this.listaEstudiantes = resp;
-            });
+          this.cargarConFiltro();
         }
       },
     );
+
+    // Escuchar cambios en la búsqueda
+    this.busquedaSubject$
+    .pipe(
+      debounceTime(500), // esperar 500ms sin escribir
+      distinctUntilChanged(), // si no cambió el texto, no hace nada
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe(termino => {
+      this.consulta.terminoDeBusqueda = termino;
+      this.consulta.pagina = 1; // resetea a la primera página cuando cambia la búsqueda
+      this.cargarConFiltro();
+    });
+  }
+
+  cargarConFiltro() {
+    console.log('Cargando con filtro:', this.consulta);
+
+    this.servicioEstudiante
+      .ListaFiltrada(this.consulta)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (resp: ListaPaginada<Estudiante>) => {
+          this.listaPaginada = resp;
+        },
+      });
+  }
+
+  onBusqueda(event: any) {
+    this.busquedaSubject$.next(event.target.value);
   }
 
   registrarEstudiante(estudiante: EstudianteComando) {
@@ -120,7 +146,7 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
           detail: 'Estudiante Actualizado',
         });
 
-        this.servicioEstudiante.notifyUpdate(estudiante);
+        this.servicioEstudiante.notifyRegistro(estudiante);
 
         this.ocultarFormulario();
       },
@@ -157,30 +183,19 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
     this.estudiante = null;
   }
 
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  pageChange(event: { first: number; rows: number }) {
+  pageChange(event: { first: number; rows: number; }) {
     this.first = event.first;
     this.rows = event.rows;
-  }
+  
+    const nuevaPagina = (this.first / this.rows) + 1;
+    
+    if (nuevaPagina === this.consulta.pagina) {
+      return;
+    }
 
-  isLastPage(): boolean {
-    return this.listaEstudiantes
-      ? this.first === this.listaEstudiantes.length - this.rows
-      : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.listaEstudiantes ? this.first === 0 : true;
+    this.consulta.pagina = nuevaPagina;
+    this.consulta.tamanoPagina = event.rows;
+  
+    this.cargarConFiltro();
   }
 }

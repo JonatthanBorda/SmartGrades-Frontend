@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment.development';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { consultaFiltrar } from '../models/consultaFiltrar.model';
+import { ListaPaginada } from '../models/listaPaginada.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +43,10 @@ export class GenericoService<T,Tl> {
 
   notifyUpdate(entidad: T) {
     this.UpdateSource.next(entidad);
+  }
+
+  ListaFiltrada(consulta: consultaFiltrar): Observable<ListaPaginada<T>> {
+    return this.http.post<ListaPaginada<T>>(`${this.api}/${this.endpoint}/lista-filtrada`, consulta);
   }
 
   notifyRegistro(entidad: Tl) {

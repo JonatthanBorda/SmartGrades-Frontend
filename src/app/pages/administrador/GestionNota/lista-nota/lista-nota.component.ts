@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { BuscarPeliculaPipe } from '../../../../shared/pipes/buscar-pelicula.pipe';
 import { NotaService } from '../../../../core/services/nota.service';
 import { EstudianteService } from '../../../../core/services/estudiante.service';
 import { ProfesorService } from '../../../../core/services/profesor.service';

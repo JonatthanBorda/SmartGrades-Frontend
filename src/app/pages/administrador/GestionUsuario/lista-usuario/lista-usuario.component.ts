@@ -11,7 +11,6 @@ import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { BuscarUsuarioPipe } from '../../../../shared/pipes/buscar-usuario.pipe';
 import { FormularioUsuarioComponent } from '../formulario-usuario/formulario-usuario.component';
 import { ComandoUsuario, Usuario } from '../../../../core/models/usuario.model';
 import { UsuarioService } from '../../../../core/services/usuario.service';
@@ -28,7 +27,6 @@ import { UsuarioService } from '../../../../core/services/usuario.service';
     IconFieldModule,
     InputTextModule,
     PaginatorModule,
-    BuscarUsuarioPipe,
     FormsModule,
     FormularioUsuarioComponent,
   ],
