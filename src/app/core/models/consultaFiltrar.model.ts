@@ -1,7 +1,7 @@
 export interface consultaFiltrar {
-    terminoDeBusqueda?: string,
-    ordenarColumna?: string,
-    OrdenarLista?: string,
-    pagina?: number,
-    tamanoPagina?: number
+    nombre?: string,
+    orderBy?: string,
+    desc?: boolean,
+    page?: number,
+    pageSize?: number
 }

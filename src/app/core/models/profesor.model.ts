@@ -1,5 +1,5 @@
 export interface Profesor {
-  id: string,
+  id: number,
   nombre: string
 }
 

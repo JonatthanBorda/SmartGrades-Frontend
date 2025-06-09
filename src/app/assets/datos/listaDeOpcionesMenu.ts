@@ -5,35 +5,28 @@ export const ListaDeOpcionesMenu: ListaOpciones[] = [
       id: 1,
       icon: "pi pi-home", // icon de Inicio
       label: "Inicio",
-      url: "/dashboard",
+      url: "/",
       opciones: []
     },
     {
       id: 2,
       icon: "pi pi-tags", // icon de Género
       label: "Profesor",
-      url: "/dashboard/profesor",
+      url: "/profesor",
       opciones: []
     },
     {
       id: 3,
       icon: "pi pi-globe", // icon de País
       label: "Estudiante",
-      url: "/dashboard/estudiante",
+      url: "/estudiante",
       opciones: []
     },
     {
       id: 4,
       icon: "pi pi-user", // icon de Actor
       label: "Notas",
-      url: "/dashboard/nota",
-      opciones: []
-    },
-    {
-      id: 6,
-      icon: "pi pi-users", // icon de Usuario
-      label: "Usuario",
-      url: "/dashboard/usuario",
+      url: "/nota",
       opciones: []
     }
 ];

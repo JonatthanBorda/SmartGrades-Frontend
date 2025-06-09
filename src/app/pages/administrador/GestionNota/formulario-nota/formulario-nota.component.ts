@@ -88,8 +88,8 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
     this.formularioNota.patchValue({
       id: nota?.id ?? '',
       nombre: nota?.nombre ?? '',
-      pais: profesorSeleccionado ?? null,
-      director: estudianteSeleccionado ?? null,
+      profesor: profesorSeleccionado ?? null,
+      estudiante: estudianteSeleccionado ?? null,
       valor: nota?.valor ?? ''
     });
   }

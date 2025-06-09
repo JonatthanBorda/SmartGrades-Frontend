@@ -21,10 +21,6 @@ export const ADMINISTRADOR_ROUTES: Routes = [
             { 
                 path: 'nota', 
                 loadChildren: () => import('./GestionNota/gestionNotas.routes').then(m => m.GESTION_NOTA_ROUTES)
-            },
-            { 
-                path: 'usuario', 
-                loadChildren: () => import('./GestionUsuario/gestionUsuario.routes').then(m => m.GESTION_USUARIO_ROUTES) 
             }
         ]
     }

@@ -9,7 +9,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
-import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { NotaService } from '../../../../core/services/nota.service';
 import { EstudianteService } from '../../../../core/services/estudiante.service';
@@ -18,6 +18,8 @@ import { FormularioNotaComponent } from '../formulario-nota/formulario-nota.comp
 import { Nota, NotaComando } from '../../../../core/models/nota.model';
 import { Profesor } from '../../../../core/models/profesor.model';
 import { Estudiante } from '../../../../core/models/estudiante.model';
+import { ListaPaginada } from '../../../../core/models/listaPaginada.model';
+import { consultaFiltrar } from '../../../../core/models/consultaFiltrar.model';
 
 @Component({
   selector: 'app-lista-nota',
@@ -49,6 +51,22 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
   visibleFormulario: boolean = false;
   nota!: Nota | null;
 
+  listaPaginada: ListaPaginada<Nota> = {
+      items: [],
+      page: 1,
+      pageSize: 10,
+      totalCount: 120
+    };
+  
+    consulta: consultaFiltrar = {
+      nombre: '',
+      orderBy: 'Id',
+      desc: false,
+      page: 1,
+      pageSize: 10,
+    };
+
+  private busquedaSubject$ = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -64,14 +82,7 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.servicioNota
-      .ListarTodos()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (resp: Nota[]) => {
-          this.listaNotas = resp;
-        },
-      });
+    this.cargarConFiltro();
 
     this.servicioEstudiante
       .ListarTodos()
@@ -93,31 +104,41 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
       });
 
 
-    this.servicioNota.Updated$.pipe(takeUntil(this.unsubscribe$)).subscribe(
-      (updatedPelicula) => {
-        if (updatedPelicula) {
-          this.servicioNota
-            .ListarTodos()
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Nota[]) => {
-              this.listaNotas = resp;
-            });
-        }
-      },
-    );
-
     this.servicioNota.Registro$.pipe(
       takeUntil(this.unsubscribe$),
     ).subscribe((registroPelicula) => {
       if (registroPelicula) {
-        this.servicioNota
-          .ListarTodos()
-          .pipe(takeUntil(this.unsubscribe$))
-          .subscribe((resp: Nota[]) => {
-            this.listaNotas = resp;
-          });
+        this.cargarConFiltro();
       }
     });
+
+    // Escuchar cambios en la búsqueda
+        this.busquedaSubject$
+        .pipe(
+          debounceTime(500), // esperar 500ms sin escribir
+          distinctUntilChanged(), // si no cambió el texto, no hace nada
+          takeUntil(this.unsubscribe$)
+        )
+        .subscribe(termino => {
+          this.consulta.nombre = termino;
+          this.consulta.page = 1; // resetea a la primera página cuando cambia la búsqueda
+          this.cargarConFiltro();
+        });
+  }
+
+  cargarConFiltro() {
+    this.servicioNota
+      .ListaFiltrada(this.consulta)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe({
+        next: (resp: ListaPaginada<Nota>) => {
+          this.listaPaginada = resp;
+        },
+      });
+  }
+
+  onBusqueda(event: any) {
+    this.busquedaSubject$.next(event.target.value);
   }
 
   registrarNota(nota: NotaComando) {
@@ -150,7 +171,7 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
             detail: 'Nota Actualizado',
           });
 
-          this.servicioNota.notifyUpdate(nota);
+          this.servicioNota.notifyRegistro(nota);
 
           this.ocultarFormulario();
         },
@@ -189,31 +210,20 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
     this.nota = null;
   }
 
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  pageChange(event: { first: number; rows: number }) {
+  pageChange(event: { first: number; rows: number; }) {
     this.first = event.first;
     this.rows = event.rows;
-  }
+  
+    const nuevaPagina = (this.first / this.rows) + 1;
+    
+    if (nuevaPagina === this.consulta.page) {
+      return;
+    }
 
-  isLastPage(): boolean {
-    return this.listaNotas
-      ? this.first === this.listaNotas.length - this.rows
-      : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.listaNotas ? this.first === 0 : true;
+    this.consulta.page = nuevaPagina;
+    this.consulta.pageSize = event.rows;
+  
+    this.cargarConFiltro();
   }
 }
 

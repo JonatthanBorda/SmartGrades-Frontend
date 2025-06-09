@@ -28,13 +28,13 @@
     </div>
     <div class="flex-grow overflow-auto relative ">
         <p-table
-            [value]="listaPaginada.elementos"
+            [value]="listaPaginada.items"
             [paginator]="true"
             [rowHover]="true"
             [first]="first"
             [lazy]="true"
-            [rows]="listaPaginada.tamanoPagina"
-            [totalRecords]="listaPaginada.cantidadTotal"
+            [rows]="listaPaginada.pageSize"
+            [totalRecords]="listaPaginada.totalCount"
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} entradas"
             (onPage)="pageChange($event)"

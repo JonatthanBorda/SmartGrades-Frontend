@@ -9,11 +9,13 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
-import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { FormularioProfesorComponent } from '../formulario-profesor/formulario-profesor.component';
 import { Profesor, ProfesorComando } from '../../../../core/models/profesor.model';
 import { ProfesorService } from '../../../../core/services/profesor.service';
+import { ListaPaginada } from '../../../../core/models/listaPaginada.model';
+import { consultaFiltrar } from '../../../../core/models/consultaFiltrar.model';
 
 
 @Component({
@@ -43,6 +45,22 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
   visibleFormulario: boolean = false;
   profesor!: Profesor | null;
 
+  listaPaginada: ListaPaginada<Profesor> = {
+      items: [],
+      page: 1,
+      pageSize: 10,
+      totalCount: 120
+    };
+  
+    consulta: consultaFiltrar = {
+      nombre: '',
+      orderBy: 'Id',
+      desc: false,
+      page: 1,
+      pageSize: 10,
+    };
+
+  private busquedaSubject$ = new Subject<string>();
   private unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -56,40 +74,43 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.servicioProfesor
-      .ListarTodos()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe({
-        next: (resp: Profesor[]) => {
-          this.listaProfesores = resp;
-        },
-      });
-
-    this.servicioProfesor.Updated$.pipe(takeUntil(this.unsubscribe$)).subscribe(
-      (updatedPais) => {
-        if (updatedPais) {
-          this.servicioProfesor
-            .ListarTodos()
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Profesor[]) => {
-              this.listaProfesores = resp;
-            });
-        }
-      },
-    );
+    this.cargarConFiltro();
 
     this.servicioProfesor.Registro$.pipe(takeUntil(this.unsubscribe$)).subscribe(
       (registroPais) => {
         if (registroPais) {
-          this.servicioProfesor
-            .ListarTodos()
-            .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Profesor[]) => {
-              this.listaProfesores = resp;
-            });
+          this.cargarConFiltro();
         }
       },
     );
+
+    // Escuchar cambios en la búsqueda
+    this.busquedaSubject$
+        .pipe(
+          debounceTime(500), // esperar 500ms sin escribir
+          distinctUntilChanged(), // si no cambió el texto, no hace nada
+          takeUntil(this.unsubscribe$)
+        )
+        .subscribe(termino => {
+          this.consulta.nombre = termino;
+          this.consulta.page = 1; // resetea a la primera página cuando cambia la búsqueda
+          this.cargarConFiltro();
+    });
+  }
+
+  cargarConFiltro() {
+      this.servicioProfesor
+        .ListaFiltrada(this.consulta)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe({
+          next: (resp: ListaPaginada<Profesor>) => {
+            this.listaPaginada = resp;
+          },
+        });
+    }
+
+  onBusqueda(event: any) {
+    this.busquedaSubject$.next(event.target.value);
   }
 
   registrarProfesor(profesor: ProfesorComando) {
@@ -107,6 +128,8 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
         this.ocultarFormulario();
       },
     })
+
+
   }
 
   actualizarProfesor(profesor: Profesor) {
@@ -120,7 +143,7 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
           detail: 'Profesor Actualizado',
         });
 
-        this.servicioProfesor.notifyUpdate(profesor);
+        this.servicioProfesor.notifyRegistro(profesor);
 
         this.ocultarFormulario();
       },
@@ -138,7 +161,7 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
           detail: 'Profesor Eliminado',
         });
 
-        this.servicioProfesor.notifyUpdate(profesor);
+        this.servicioProfesor.notifyRegistro(profesor);
       },
     });
   }
@@ -157,30 +180,19 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
     this.profesor = null;
   }
 
-  next() {
-    this.first = this.first + this.rows;
-  }
-
-  prev() {
-    this.first = this.first - this.rows;
-  }
-
-  reset() {
-    this.first = 0;
-  }
-
-  pageChange(event: { first: number; rows: number }) {
+  pageChange(event: { first: number; rows: number; }) {
     this.first = event.first;
     this.rows = event.rows;
-  }
+  
+    const nuevaPagina = (this.first / this.rows) + 1;
+    
+    if (nuevaPagina === this.consulta.page) {
+      return;
+    }
 
-  isLastPage(): boolean {
-    return this.listaProfesores
-      ? this.first === this.listaProfesores.length - this.rows
-      : true;
-  }
-
-  isFirstPage(): boolean {
-    return this.listaProfesores ? this.first === 0 : true;
+    this.consulta.page = nuevaPagina;
+    this.consulta.pageSize = event.rows;
+  
+    this.cargarConFiltro();
   }
 }

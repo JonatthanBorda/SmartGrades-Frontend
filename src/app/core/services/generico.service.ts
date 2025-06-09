@@ -25,7 +25,7 @@ export class GenericoService<T,Tl> {
     return this.http.get<T[]>(`${this.api}/${this.endpoint}`);
   }
 
-  ListarPorId(id: string): Observable<T>{
+  ListarPorId(id: number): Observable<T>{
     return this.http.get<T>(`${this.api}/${this.endpoint}/${id}`);
   }
 
@@ -33,11 +33,11 @@ export class GenericoService<T,Tl> {
     return this.http.post<void>(`${this.api}/${this.endpoint}`, datos);
   }
 
-  Actualizar(id: string, datos: T): Observable<void>{
+  Actualizar(id: number, datos: T): Observable<void>{
     return this.http.put<void>(`${this.api}/${this.endpoint}/${id}`, datos);
   }
 
-  Eliminar(id: string): Observable<void>{
+  Eliminar(id: number): Observable<void>{
     return this.http.delete<void>(`${this.api}/${this.endpoint}/${id}`);
   }
 
@@ -46,7 +46,7 @@ export class GenericoService<T,Tl> {
   }
 
   ListaFiltrada(consulta: consultaFiltrar): Observable<ListaPaginada<T>> {
-    return this.http.post<ListaPaginada<T>>(`${this.api}/${this.endpoint}/lista-filtrada`, consulta);
+    return this.http.get<ListaPaginada<T>>(`${this.api}/${this.endpoint}/filter?orderBy=${consulta.orderBy}&desc=${consulta.desc}&page=${consulta.page}&pageSize=${consulta.pageSize}&nombre=${consulta.nombre}`);
   }
 
   notifyRegistro(entidad: Tl) {
