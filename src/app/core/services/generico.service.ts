@@ -46,7 +46,7 @@ export class GenericoService<T,Tl> {
   }
 
   ListaFiltrada(consulta: consultaFiltrar): Observable<ListaPaginada<T>> {
-    return this.http.get<ListaPaginada<T>>(`${this.api}/${this.endpoint}/filter?orderBy=${consulta.orderBy}&desc=${consulta.desc}&page=${consulta.page}&pageSize=${consulta.pageSize}&nombre=${consulta.nombre}`);
+    return this.http.get<ListaPaginada<T>>(`${this.api}/${this.endpoint}/filter?orderBy=${consulta.orderBy}&desc=${consulta.desc}&page=${consulta.page}&pageSize=${consulta.pageSize}&name=${consulta.name}`);
   }
 
   notifyRegistro(entidad: Tl) {

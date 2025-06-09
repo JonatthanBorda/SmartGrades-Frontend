@@ -33,17 +33,17 @@
 
         <label for="" class="flex flex-col gap-2 font-bold">
             Estudiante
-            <p-select [options]="estudiantes"  formControlName="estudiante" optionLabel="nombre" [filter]="true" filterBy="nombre" [showClear]="true" placeholder="Selecciona estudiante" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
+            <p-select [options]="estudiantes"  formControlName="estudiante" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Selecciona estudiante" appendTo="body" class="w-full border-2 border-gray-400 rounded-md  font-normal"
             [ngClass]="{'border-red-500!': this.campoInvalido('estudiante')}"
             >
                 <ng-template #selectedItem let-selectedOption>
                     <div class="flex items-center gap-2">
-                        <div>{{ selectedOption.nombre }}</div>
+                        <div>{{ selectedOption.name }}</div>
                     </div>
                 </ng-template>
                 <ng-template let-director #item>
                     <div class="flex items-center gap-2">
-                        <div>{{ director.nombre }}</div>
+                        <div>{{ director.name }}</div>
                     </div>
                 </ng-template>
             </p-select>

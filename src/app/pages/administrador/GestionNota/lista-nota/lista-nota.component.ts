@@ -20,6 +20,7 @@ import { Profesor } from '../../../../core/models/profesor.model';
 import { Estudiante } from '../../../../core/models/estudiante.model';
 import { ListaPaginada } from '../../../../core/models/listaPaginada.model';
 import { consultaFiltrar } from '../../../../core/models/consultaFiltrar.model';
+import { ObtenerNombreEstudiantePipe } from '../../../../shared/pipes/obtener-nombre-estudiante.pipe';
 
 @Component({
   selector: 'app-lista-nota',
@@ -34,6 +35,7 @@ import { consultaFiltrar } from '../../../../core/models/consultaFiltrar.model';
     PaginatorModule,
     FormsModule,
     FormularioNotaComponent,
+    ObtenerNombreEstudiantePipe
   ],
   templateUrl: './lista-nota.component.html',
   styleUrl: './lista-nota.component.css',
@@ -59,7 +61,7 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
     };
   
     consulta: consultaFiltrar = {
-      nombre: '',
+      name: '',
       orderBy: 'Id',
       desc: false,
       page: 1,
@@ -120,7 +122,7 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
           takeUntil(this.unsubscribe$)
         )
         .subscribe(termino => {
-          this.consulta.nombre = termino;
+          this.consulta.name = termino;
           this.consulta.page = 1; // resetea a la primera página cuando cambia la búsqueda
           this.cargarConFiltro();
         });

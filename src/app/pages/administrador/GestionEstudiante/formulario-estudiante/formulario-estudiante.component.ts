@@ -65,10 +65,10 @@ export class FormularioEstudianteComponent implements OnInit, OnChanges {
     });
   }
 
-  precargarFormulario(pais?: Estudiante) {
+  precargarFormulario(estudiante?: Estudiante) {
     this.formularioEstudiante.patchValue({
-      id: pais?.id ?? '',
-      nombre: pais?.nombre ?? '',
+      id: estudiante?.id ?? '',
+      nombre: estudiante?.name ?? '',
     });
   }
 
@@ -82,13 +82,13 @@ export class FormularioEstudianteComponent implements OnInit, OnChanges {
     if (this.estudiante) {
       const estudiante: Estudiante = {
         id: this.estudiante.id,
-        nombre: this.formularioEstudiante.value.nombre,
+        name: this.formularioEstudiante.value.nombre,
       };
       this.actualizar.emit(estudiante);
     } else {
 
       const estudianteComando: EstudianteComando = {
-        nombre: this.formularioEstudiante.value.nombre,
+        name: this.formularioEstudiante.value.nombre,
       };
 
       this.registrar.emit(estudianteComando);

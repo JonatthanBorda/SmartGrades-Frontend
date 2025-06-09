@@ -68,7 +68,7 @@ export class FormularioProfesorComponent implements OnInit, OnChanges {
   precargarFormulario(pais?: Profesor) {
     this.formularioProfesor.patchValue({
       id: pais?.id ?? '',
-      nombre: pais?.nombre ?? '',
+      nombre: pais?.name ?? '',
     });
   }
 
@@ -82,13 +82,13 @@ export class FormularioProfesorComponent implements OnInit, OnChanges {
     if (this.profesor) {
       const profesor: Profesor = {
         id: this.profesor.id,
-        nombre: this.formularioProfesor.value.nombre,
+        name: this.formularioProfesor.value.nombre,
       };
       this.actualizar.emit(profesor);
     } else {
 
       const profesorComando: ProfesorComando = {
-        nombre: this.formularioProfesor.value.nombre,
+        name: this.formularioProfesor.value.nombre,
       };
 
       this.registrar.emit(profesorComando);

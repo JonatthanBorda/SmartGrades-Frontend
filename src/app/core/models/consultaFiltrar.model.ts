@@ -1,5 +1,5 @@
 export interface consultaFiltrar {
-    nombre?: string,
+    name?: string,
     orderBy?: string,
     desc?: boolean,
     page?: number,

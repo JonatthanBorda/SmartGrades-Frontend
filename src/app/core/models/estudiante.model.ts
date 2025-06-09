@@ -1,8 +1,8 @@
 export interface Estudiante {
   id: number,
-  nombre: string
+  name: string
 }
 
 export interface EstudianteComando {
-  nombre: string
+  name: string
 }

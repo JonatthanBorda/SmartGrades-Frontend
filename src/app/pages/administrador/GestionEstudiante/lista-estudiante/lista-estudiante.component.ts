@@ -53,7 +53,7 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
   };
 
   consulta: consultaFiltrar = {
-    nombre: '',
+    name: '',
     orderBy: 'Id',
     desc: false,
     page: 1,
@@ -93,7 +93,7 @@ export class ListaEstudianteComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     )
     .subscribe(termino => {
-      this.consulta.nombre = termino;
+      this.consulta.name = termino;
       this.consulta.page = 1; // resetea a la primera página cuando cambia la búsqueda
       this.cargarConFiltro();
     });

@@ -82,15 +82,15 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
       return;
     }
   
-    const profesorSeleccionado = this.profesores.find(p => p.id === nota?.idProfesor);
-    const estudianteSeleccionado = this.estudiantes.find(d => d.id === nota?.idProfesor);
+    const profesorSeleccionado = this.profesores.find(p => p.id === nota?.idTeacher);
+    const estudianteSeleccionado = this.estudiantes.find(d => d.id === nota?.idTeacher);
 
     this.formularioNota.patchValue({
       id: nota?.id ?? '',
-      nombre: nota?.nombre ?? '',
+      nombre: nota?.name ?? '',
       profesor: profesorSeleccionado ?? null,
       estudiante: estudianteSeleccionado ?? null,
-      valor: nota?.valor ?? ''
+      valor: nota?.value ?? ''
     });
   }
   
@@ -106,19 +106,19 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
     if (this.nota) {
       const notaActualizada: Nota = {
         id: formValues.id,
-        nombre: formValues.nombre,
-        idProfesor: formValues.profesor.id ?? '',
-        idEstudiante: formValues.estudiante.id ?? '',
-        valor: formValues.valor
+        name: formValues.nombre,
+        idTeacher: formValues.profesor.id ?? '',
+        idStudent: formValues.estudiante.id ?? '',
+        value: formValues.valor
       };
 
       this.actualizar.emit(notaActualizada);
     } else {
       const nuevaNota: NotaComando = {
-        nombre: formValues.nombre,
-        idProfesor: formValues.profesor.id ?? '',
-        idEstudiante: formValues.estudiante.id ?? '',
-        valor: formValues.valor
+        name: formValues.nombre,
+        idTeacher: formValues.profesor.id ?? '',
+        idStudent: formValues.estudiante.id ?? '',
+        value: formValues.valor
       };
       
       this.registrar.emit(nuevaNota);

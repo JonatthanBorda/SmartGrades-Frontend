@@ -1,8 +1,8 @@
 export interface Profesor {
   id: number,
-  nombre: string
+  name: string
 }
 
 export interface ProfesorComando {
-  nombre: string
+  name: string
 }

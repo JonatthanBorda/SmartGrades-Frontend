@@ -10,6 +10,6 @@ export class EstudianteService extends GenericoService<Estudiante, EstudianteCom
 
   constructor(http: HttpClient) { 
     super(http);
-    this.endpoint = "Estudiantes";
+    this.endpoint = 'Student';
   }
 }
