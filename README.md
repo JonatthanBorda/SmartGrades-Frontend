@@ -1,59 +1,121 @@
-# SmartGradesFrontend
+# Frontend - Gestión de Series Animadas
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1.
+Este es el repositorio del frontend de la aplicación de gestión de series animadas, desarrollado con **Angular 19**. La aplicación permite realizar operaciones CRUD sobre series y está diseñada con una estructura modular clara y bien organizada.
 
-## Development server
+## 📁 Estructura del Proyecto
 
-To start a local development server, run:
+El proyecto sigue una estructura modular para facilitar la escalabilidad y el mantenimiento:
 
-```bash
-ng serve
+- **`src/app/core`**: Contiene la configuración principal, incluyendo:
+  - `guards/`: Definición de guardias de ruta.
+  - `interceptors/`: Interceptores para modificar solicitudes HTTP.
+  - `models/`: Modelos de datos utilizados en la aplicación.
+  - `services/`: Servicios que manejan la lógica de negocio y comunicación con el backend.
+
+- **`src/app/shared/components`**: Componentes reutilizables como:
+  - `menu-lateral-administrador/`
+  - `encabezado-administrador/`
+  - `encabezado-invitado/`
+  - `tarjeta-pelicula/`
+
+- **`src/app/environments`**: Configuración de entornos:
+  - `environment.development.ts`: Variables para el entorno de desarrollo.
+  - `environment.docker.ts`: Configuración para el entorno en Docker.
+  - `environment.ts`: Configuración general del entorno.
+ 
+ ```
+FRONTENDGESTIONDETAREAS/
+│-- .github/workflows/        # Configuraciones para CI/CD en GitHub Actions
+│   ├── deploy.yaml           # Configuración para despliegue en GitHub Pages
+│
+│-- config/                   # Archivos de configuración
+│   ├── default.conf
+│
+│-- src/
+│   ├── app/
+│   │   ├── assets/          # Recursos estáticos (imágenes, fuentes, etc.)
+│   │   ├── core/            # Código principal y servicios
+│   │   │   ├── guards/      # Guards de autenticación y rutas
+│   │   │   ├── interceptors/# Interceptores HTTP
+│   │   │   ├── models/      # Modelos de datos
+│   │   │   ├── services/    # Servicios de API y lógica de negocio
+│   │   ├── pages/           # Páginas principales del frontend
+│   │   ├── shared/          # Componentes reutilizables
+│   │   │   ├── components/  # Componentes compartidos
+│   │   ├── directives/      # Directivas personalizadas
+│   │   ├── pipes/           # Pipes personalizados
+│   │   ├── environments/    # Configuración de entornos (Desarrollo, Docker, Producción)
+│   │   │   ├── environment.development.ts
+│   │   │   ├── environment.docker.ts
+│   │   │   ├── environment.ts
+│   │   ├── app.routes.ts    # Rutas de la aplicación
+│   │   ├── app.config.ts    # Configuración general
+│   │   ├── app.component.*  # Componente principal
+│   │
+│   ├── index.html           # Archivo principal de la aplicación
+│   ├── main.server.ts       # Configuración del servidor en Angular Universal
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🚀 Tecnologías Utilizadas
 
-## Code scaffolding
+- **Angular 19**: Framework principal.
+- **TailwindCSS**: Para el diseño y estilización de la aplicación.
+- **Google Fonts Icons**: Para los iconos de la interfaz.
+- **Docker**: Para la contenedorización del frontend.
+- **GitHub Actions**: Para CI/CD en el despliegue en GitHub Pages.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🔧 Instalación y Ejecución
 
-```bash
-ng generate component component-name
+### 1️⃣ Clonar el repositorio
+```sh
+    git clone https://github.com/Nayid4/FrontendGestionDeSeriesAnimadasAngular.git
+    cd FrontendGestionDeSeriesAnimadasAngular
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+### 2️⃣ Instalar dependencias
+```sh
+    npm install
 ```
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
+### 3️⃣ Ejecutar en desarrollo
+```sh
+    ng serve
 ```
+La aplicación estará disponible en `http://localhost:4200`.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🐳 Ejecución con Docker
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+### Construcción y ejecución del contenedor
+```sh
+    docker-compose up --build
 ```
+La aplicación estará expuesta en `http://localhost:4200` y usará la API dockerizada.
 
-## Running end-to-end tests
+## 📡 Despliegue
 
-For end-to-end (e2e) testing, run:
+Se han configurado tres formas de despliegue:
 
-```bash
-ng e2e
-```
+1. **GitHub Pages**: La aplicación está desplegada en [GitHub Pages](https://github.com/Nayid4/FrontendGestionDeSeriesAnimadasAngular) utilizando **CI/CD con GitHub Actions**. Se configuró un workflow que automatiza la construcción y el despliegue al realizar un push a la rama principal.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. **Docker**: Se creó un `Dockerfile` y un `docker-compose.yml` para desplegar el frontend junto con la API en un entorno completamente contenedorizado.
 
-## Additional Resources
+3. **Desarrollo Local**: Puede ejecutarse con `ng serve` utilizando la API en local o en Azure.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📌 Justificación de Enfoques y Herramientas
+
+- **Modularización**: El proyecto se estructuró en módulos bien definidos para facilitar la reutilización y mantenibilidad.
+- **Angular + TailwindCSS**: Se optó por esta combinación para un desarrollo ágil y estilización flexible.
+- **CI/CD con GitHub Actions**: Se automatizó el despliegue en GitHub Pages para facilitar la actualización de la aplicación.
+- **Docker**: Permite replicar entornos de ejecución fácilmente, asegurando que el frontend funcione correctamente con la API.
+- **Ciclo de Vida de Componentes**: Se utilizaron `OnInit` para inicialización y `OnDestroy` para limpiar suscripciones a servicios.
+
+## 🤝 Contribución
+
+Si deseas contribuir, realiza un **fork** del repositorio, crea una rama con tu funcionalidad y envía un **pull request**.
+
+## 📜 Licencia
+
+Este proyecto es de código abierto y está disponible bajo la licencia MIT.
+
+
+

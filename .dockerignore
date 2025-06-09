@@ -1,0 +1,9 @@
+# Ignorar dependencias y carpetas innecesarias para la construcción
+node_modules
+dist
+.git
+.vscode
+.angular
+
+# No ignores el archivo package-lock.json
+!package-lock.json

@@ -1,0 +1,18 @@
+services:
+  frontend-gestion-de-tareas:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENV=docker  # Configura el entorno en el build
+    ports:
+      - "4200:80"  # Expone el puerto 4200 del contenedor en el 4200 del host
+    restart: always
+    environment:
+      - NODE_ENV=docker
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

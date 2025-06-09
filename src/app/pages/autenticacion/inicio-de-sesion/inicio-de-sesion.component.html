@@ -1,0 +1,96 @@
+<div class="flex flex-col h-screen w-screen lg:flex-row" >
+  
+  <div class="fondo2 h-1/6 w-full lg:h-screen lg:w-7/12">
+    <!-- Contenido opcional -->
+    <div class="flex flex-col h-screen w-screen lg:flex-row">
+      @defer{
+      <div class="fondo2 h-1/6 w-full lg:h-screen lg:w-7/12">
+        <!-- Contenido opcional -->
+      </div>
+      } @placeholder {
+      <div class="h-1/6 w-full lg:h-screen lg:w-7/12">
+        <!-- Contenido opcional -->
+      </div>
+      }
+      <div
+        class="h-5/6 w-svw lg:h-screen lg:w-5/12 bg-white flex justify-center"
+      >
+        <div
+          class="w-10/12 sm:w-6/12 lg:w-9/12 py-4! bg-white rounded-xl flex lg:items-center justify-center"
+        >
+          <div class="flex flex-col w-full px-2! gap-10">
+            <div
+              class="flex items-center gap-2 cursor-pointer hover:opacity-80"
+              [routerLink]="['/']"
+            >
+              <a
+                class="py-1! px-2! rounded-md bg-gray-300/40 text-black text-lg shadow-sm border-none"
+              >
+                <i class="pi pi-arrow-left"></i>
+              </a>
+              <span class="text-letra-gris-oscuro font-medium">Volver</span>
+            </div>
+
+            <div class="flex flex-col gap-5">
+              <div class="flex flex-col gap-2">
+                <h1 class="text-letra-negra font-bold text-5xl">
+                  Iniciar Sesión
+                </h1>
+                <p class="text-letra-negra font-normal">
+                  Ingresa los datos de tú cuenta.
+                </p>
+              </div>
+
+              <form
+                [formGroup]="formulario"
+                (ngSubmit)="onSubmit()"
+                class="flex flex-col gap-3"
+              >
+                <label class="flex flex-col gap-1 text-letra-negra font-normal">
+                  Usuario
+                  <input
+                    id="nombreDeUsuario"
+                    formControlName="nombreDeUsuario"
+                    [ngClass]="{
+                      error:
+                        formulario.get('nombreDeUsuario')?.invalid &&
+                        formulario.get('nombreDeUsuario')?.touched
+                    }"
+                    type="text"
+                    required
+                    class="text-md font-semibold h-4 w-full border-gray-500/40 border-1 border-solid rounded-md px-2! py-5!"
+                  />
+                </label>
+
+                <label class="flex flex-col gap-1 text-letra-negra font-normal">
+                  Contraseña
+                  <input
+                    id="contrasena"
+                    formControlName="contrasena"
+                    [ngClass]="{
+                      error:
+                        formulario.get('contrasena')?.invalid &&
+                        formulario.get('contrasena')?.touched
+                    }"
+                    type="password"
+                    required
+                    class="h-4 w-full border-gray-500/40 border-1 border-solid rounded-md px-2! py-5! focus:outline-none"
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  class="px-4! py-2! cursor-pointer hover:bg-gray-700 text-lg bg-gray-800 text-white font-semibold border-none rounded-md"
+                >
+                  Iniciar Sesión
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+</div>

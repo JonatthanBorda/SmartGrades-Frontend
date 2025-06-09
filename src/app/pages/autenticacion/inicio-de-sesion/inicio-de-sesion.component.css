@@ -1,0 +1,16 @@
+.borde-custom {
+    border: 4px solid black;
+}
+
+.fondo2 {
+    /*background-color: #282833;*/
+    /*background: url('/assets/fondo-inicio.jpg');*/
+    background: url('../../../assets/imagenes/fondo.jpg');
+    background-size: cover; /* Ajusta la imagen para cubrir todo el fondo */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-position: center; /* Centra la imagen en la pantalla */
+}
+
+.error {
+    border: 2px solid red;
+  }
