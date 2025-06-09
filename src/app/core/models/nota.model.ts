@@ -1,14 +1,14 @@
 export interface Nota {
-  id: number,
-  nombre: number,
-  idProfesor: number,
-  idEstudiante: number,
+  id: string,
+  nombre: string,
+  idProfesor: string,
+  idEstudiante: string,
   valor: number
 }
 
 export interface NotaComando {
-  nombre: number,
-  idProfesor: number,
-  idEstudiante: number,
+  nombre: string,
+  idProfesor: string,
+  idEstudiante: string,
   valor: number
 }
