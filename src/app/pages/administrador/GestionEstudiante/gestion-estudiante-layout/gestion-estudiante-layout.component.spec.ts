@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GestionPaisLayoutComponent } from './gestion-pais-layout.component';
+import { GestionPaisLayoutComponent } from './gestion-estudiante-layout.component';
 
 describe('GestionPaisLayoutComponent', () => {
   let component: GestionPaisLayoutComponent;

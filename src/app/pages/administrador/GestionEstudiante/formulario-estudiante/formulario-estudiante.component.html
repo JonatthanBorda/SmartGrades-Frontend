@@ -1,7 +1,7 @@
 <p-dialog header="{{titulo }}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" (onHide)="cerrarDialog()">
-    <span class="p-text-secondary block mb-5!">{{tipo}} informacion de pais.</span>
+    <span class="p-text-secondary block mb-5!">{{tipo}} informacion de estudiante.</span>
     
-    <form [formGroup]="formularioPais" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 ">
+    <form [formGroup]="formularioEstudiante" (ngSubmit)="onSubmit()" class="flex flex-col gap-2 ">
         <label for="" class="flex flex-col gap-2 font-bold">
             Nombre
             <input type="text" formControlName="nombre" 

@@ -80,11 +80,11 @@ export class FormularioProfesorComponent implements OnInit, OnChanges {
   
   
     if (this.profesor) {
-      const Pais: Profesor = {
+      const profesor: Profesor = {
         id: this.profesor.id,
         nombre: this.formularioProfesor.value.nombre,
       };
-      this.actualizar.emit(Pais);
+      this.actualizar.emit(profesor);
     } else {
 
       const profesorComando: ProfesorComando = {

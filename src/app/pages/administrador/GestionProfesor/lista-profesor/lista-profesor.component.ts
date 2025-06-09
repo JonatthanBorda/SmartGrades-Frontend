@@ -47,9 +47,7 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
 
   constructor(
     private servicioProfesor: ProfesorService,
-    private cdr: ChangeDetectorRef,
     private servicioMensaje: MessageService,
-    private route: Router,
   ) {}
 
   ngOnDestroy(): void {
@@ -119,7 +117,7 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
         this.servicioMensaje.add({
         severity: 'success',
           summary: 'Actualizado',
-          detail: 'Pais Actualizado',
+          detail: 'Profesor Actualizado',
         });
 
         this.servicioProfesor.notifyUpdate(profesor);
@@ -129,25 +127,25 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
       })
   }
 
-  eliminarPais(Pais: Profesor) {
-    this.servicioProfesor.Eliminar(Pais.id)
+  eliminarProfesor(profesor: Profesor) {
+    this.servicioProfesor.Eliminar(profesor.id)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe({
       next: () => {
         this.servicioMensaje.add({
           severity: 'success',
           summary: 'Eliminado',
-          detail: 'Pais Eliminado',
+          detail: 'Profesor Eliminado',
         });
 
-        this.servicioProfesor.notifyUpdate(Pais);
+        this.servicioProfesor.notifyUpdate(profesor);
       },
     });
   }
 
-  mostrarFormulario(Pais?: Profesor) {
-    if (Pais) {
-      this.profesor = { ...Pais };;
+  mostrarFormulario(profesor?: Profesor) {
+    if (profesor) {
+      this.profesor = { ...profesor };;
     }
 
     this.visibleFormulario = !this.visibleFormulario;

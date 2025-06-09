@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GestionPeliculaLayoutComponent } from './gestion-pelicula-layout.component';
+import { GestionPeliculaLayoutComponent } from './gestion-nota-layout.component';
 
 describe('GestionPeliculaLayoutComponent', () => {
   let component: GestionPeliculaLayoutComponent;

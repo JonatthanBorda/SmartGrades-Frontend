@@ -45,20 +45,20 @@
                 <th class="px-1! py-2! border-b border-gray-300/40 w-1/4">Opciones</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-pais>
+        <ng-template pTemplate="body" let-profesor>
             <tr>
                 <td class="px-1! py-1! border-b border-gray-300/40 ">
-                    {{ pais.nombre }}
+                    {{ profesor.nombre }}
                 </td>
             
                 <td class="px-1! py-1! border-b border-gray-300/40">
                     <div class="flex gap-1 ">
-                        <button (click)="mostrarFormulario(pais)" 
+                        <button (click)="mostrarFormulario(profesor)" 
                         class="cursor-pointer"
                         title="Actualizar">
                             <i class="pi pi-pencil hover:bg-green-700 hover:text-white p-2! rounded-full"></i>
                         </button>
-                        <button (click)="eliminarPais(pais)" 
+                        <button (click)="eliminarProfesor(profesor)" 
                         class="cursor-pointer"
                         title="Eliminar">
                             <i class="pi pi-trash hover:bg-red-500 hover:text-white p-2! rounded-full"></i>

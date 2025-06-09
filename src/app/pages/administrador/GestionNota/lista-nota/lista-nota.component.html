@@ -1,13 +1,11 @@
 <div class="">
-    <app-formulario-pelicula 
+    <app-formulario-nota 
         [visible]="visibleFormulario" 
-        [directores]="listaDirectores"
-        [paises]="listaPaises"
-        [pelicula]="Pelicula"
-        [generos]="listaGeneros"
-        [actores]="listaActores"
-        (registrar)="registrarPelicula($event)"
-        (actualizar)="actualizarPelicula($event)"
+        [nota]="nota"
+        [profesores]="listaProfesores"
+        [estudiantes]="listaEstudiante"
+        (registrar)="registrarNota($event)"
+        (actualizar)="actualizarNota($event)"
         (cerrar)="ocultarFormulario()"
     />
     
@@ -32,7 +30,7 @@
     </div>
     <div class="flex-grow overflow-auto relative ">
         <p-table
-            [value]="listaPeliculas | buscarPelicula: busqueda"
+            [value]="listaNotas"
             [paginator]="true"
             [rows]="10"
             [first]="first"
@@ -45,34 +43,39 @@
         >
         <ng-template pTemplate="header">
             <tr>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Titulo</th>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Director</th>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Pais</th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Nombre</th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Profesor</th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Estudiante</th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Valor</th>
                 <th class="px-1! py-2! border-b border-gray-300/40 w-3/12">Opciones</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-pelicula>
+        <ng-template pTemplate="body" let-nota>
             <tr>
                 <td class="px-1! py-1! border-b border-gray-300/40 ">
-                    {{ pelicula.titulo }}
+                    {{ nota.nombre }}
                 </td>
 
                 <td class="px-1! py-1! border-b border-gray-300/40 ">
-                    {{ pelicula.director.nombre }}
+                    {{ nota.idProfesor }}
                 </td>
 
                 <td class="px-1! py-1! border-b border-gray-300/40 ">
-                    {{ pelicula.pais.nombre }}
+                    {{ nota.idEstudiante }}
+                </td>
+
+                <td class="px-1! py-1! border-b border-gray-300/40 ">
+                    {{ nota.valor }}
                 </td>
                 
                 <td class="px-1! py-1! border-b border-gray-300/40">
                     <div class="flex gap-1 ">
-                        <button (click)="mostrarFormulario(pelicula)" 
+                        <button (click)="mostrarFormulario(nota)" 
                         class="cursor-pointer"
                         title="Actualizar">
                             <i class="pi pi-pencil hover:bg-green-700 hover:text-white p-2! rounded-full"></i>
                         </button>
-                        <button (click)="eliminarPelicula(pelicula)" 
+                        <button (click)="eliminarNota(nota)" 
                         class="cursor-pointer"
                         title="Eliminar">
                             <i class="pi pi-trash hover:bg-red-500 hover:text-white p-2! rounded-full"></i>
@@ -84,7 +87,7 @@
         </ng-template>
         <ng-template pTemplate="paginator">
             <div class="flex justify-end p-1 sticky bottom-0 bg-white">
-            <p-paginator [rows]="5" [totalRecords]="listaPeliculas.length" [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
+            <p-paginator [rows]="5" [totalRecords]="listaNotas.length" [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
             </div>
         </ng-template>
         </p-table>

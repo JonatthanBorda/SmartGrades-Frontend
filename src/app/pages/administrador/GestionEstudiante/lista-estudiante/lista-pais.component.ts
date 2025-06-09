@@ -11,10 +11,9 @@ import { FormsModule } from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { Subject, takeUntil } from 'rxjs';
 import { MessageService } from 'primeng/api';
-import { FormularioPaisComponent } from '../formulario-pais/formulario-pais.component';
-import { ComandoPais, Pais } from '../../../../core/models/pais.model';
-import { BuscarPaisPipe } from '../../../../shared/pipes/buscar-pais.pipe';
-import { PaisService } from '../../../../core/services/pais.service';
+import { FormularioEstudianteComponent } from '../formulario-estudiante/formulario-estudiante.component';
+import { EstudianteService } from '../../../../core/services/estudiante.service';
+import { Estudiante, EstudianteComando } from '../../../../core/models/estudiante.model';
 
 
 @Component({
@@ -28,30 +27,27 @@ import { PaisService } from '../../../../core/services/pais.service';
       IconFieldModule,
       InputTextModule,
       PaginatorModule,
-      BuscarPaisPipe,
       FormsModule,
-      FormularioPaisComponent,
+      FormularioEstudianteComponent,
     ],
   templateUrl: './lista-pais.component.html',
   styleUrl: './lista-pais.component.css'
 })
-export class ListaPaisComponent implements OnInit, OnDestroy {
-  listaPaises: Pais[] = [];
+export class ListaEstudianteComponent implements OnInit, OnDestroy {
+  listaEstudiantes: Estudiante[] = [];
   busqueda: string = '';
   first = 0;
   rows = 10;
   registrar: string = '';
 
   visibleFormulario: boolean = false;
-  Pais!: Pais | null;
+  estudiante!: Estudiante | null;
 
   private unsubscribe$ = new Subject<void>();
 
   constructor(
-    private servicioPais: PaisService,
-    private cdr: ChangeDetectorRef,
+    private servicioEstudiante: EstudianteService,
     private servicioMensaje: MessageService,
-    private route: Router,
   ) {}
 
   ngOnDestroy(): void {
@@ -60,96 +56,96 @@ export class ListaPaisComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.servicioPais
+    this.servicioEstudiante
       .ListarTodos()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
-        next: (resp: Pais[]) => {
-          this.listaPaises = resp;
+        next: (resp: Estudiante[]) => {
+          this.listaEstudiantes = resp;
         },
       });
 
-    this.servicioPais.Updated$.pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.servicioEstudiante.Updated$.pipe(takeUntil(this.unsubscribe$)).subscribe(
       (updatedPais) => {
         if (updatedPais) {
-          this.servicioPais
+          this.servicioEstudiante
             .ListarTodos()
             .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Pais[]) => {
-              this.listaPaises = resp;
+            .subscribe((resp: Estudiante[]) => {
+              this.listaEstudiantes = resp;
             });
         }
       },
     );
 
-    this.servicioPais.Registro$.pipe(takeUntil(this.unsubscribe$)).subscribe(
+    this.servicioEstudiante.Registro$.pipe(takeUntil(this.unsubscribe$)).subscribe(
       (registroPais) => {
         if (registroPais) {
-          this.servicioPais
+          this.servicioEstudiante
             .ListarTodos()
             .pipe(takeUntil(this.unsubscribe$))
-            .subscribe((resp: Pais[]) => {
-              this.listaPaises = resp;
+            .subscribe((resp: Estudiante[]) => {
+              this.listaEstudiantes = resp;
             });
         }
       },
     );
   }
 
-  registrarPais(pais: ComandoPais) {
-    this.servicioPais.Crear(pais)
+  registrarEstudiante(estudiante: EstudianteComando) {
+    this.servicioEstudiante.Crear(estudiante)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe({
       next: () => {
         this.servicioMensaje.add({
           severity: 'success',
           summary: 'Registrado',
-          detail: 'Pais Registrado',
+          detail: 'Estudiante Registrado',
         });
 
-        this.servicioPais.notifyRegistro(pais);
+        this.servicioEstudiante.notifyRegistro(estudiante);
         this.ocultarFormulario();
       },
     })
   }
 
-  actualizarPais(Pais: Pais) {
-    this.servicioPais.Actualizar(Pais.id,Pais)
+  actualizarEstudiante(estudiante: Estudiante) {
+    this.servicioEstudiante.Actualizar(estudiante.id,estudiante)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe({
       next: () => {
         this.servicioMensaje.add({
         severity: 'success',
           summary: 'Actualizado',
-          detail: 'Pais Actualizado',
+          detail: 'Estudiante Actualizado',
         });
 
-        this.servicioPais.notifyUpdate(Pais);
+        this.servicioEstudiante.notifyUpdate(estudiante);
 
         this.ocultarFormulario();
       },
       })
   }
 
-  eliminarPais(Pais: Pais) {
-    this.servicioPais.Eliminar(Pais.id)
+  eliminarEstudiante(estudiante: Estudiante) {
+    this.servicioEstudiante.Eliminar(estudiante.id)
     .pipe(takeUntil(this.unsubscribe$))
     .subscribe({
       next: () => {
         this.servicioMensaje.add({
           severity: 'success',
           summary: 'Eliminado',
-          detail: 'Pais Eliminado',
+          detail: 'Estudiante Eliminado',
         });
 
-        this.servicioPais.notifyUpdate(Pais);
+        this.servicioEstudiante.notifyUpdate(estudiante);
       },
     });
   }
 
-  mostrarFormulario(Pais?: Pais) {
-    if (Pais) {
-      this.Pais = { ...Pais };;
+  mostrarFormulario(estudiante?: Estudiante) {
+    if (estudiante) {
+      this.estudiante = { ...estudiante };;
     }
 
     this.visibleFormulario = !this.visibleFormulario;
@@ -158,7 +154,7 @@ export class ListaPaisComponent implements OnInit, OnDestroy {
 
   ocultarFormulario() {
     this.visibleFormulario = false
-    this.Pais = null;
+    this.estudiante = null;
   }
 
   next() {
@@ -179,12 +175,12 @@ export class ListaPaisComponent implements OnInit, OnDestroy {
   }
 
   isLastPage(): boolean {
-    return this.listaPaises
-      ? this.first === this.listaPaises.length - this.rows
+    return this.listaEstudiantes
+      ? this.first === this.listaEstudiantes.length - this.rows
       : true;
   }
 
   isFirstPage(): boolean {
-    return this.listaPaises ? this.first === 0 : true;
+    return this.listaEstudiantes ? this.first === 0 : true;
   }
 }

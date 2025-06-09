@@ -1,9 +1,9 @@
 <div class="">
-    <app-formulario-pais 
+    <app-formulario-estudiante 
         [visible]="visibleFormulario" 
-        [pais]="Pais"
-        (registrar)="registrarPais($event)"
-        (actualizar)="actualizarPais($event)"
+        [estudiante]="estudiante"
+        (registrar)="registrarEstudiante($event)"
+        (actualizar)="actualizarEstudiante($event)"
         (cerrar)="ocultarFormulario()"
     />
     
@@ -28,7 +28,7 @@
     </div>
     <div class="flex-grow overflow-auto relative ">
         <p-table
-            [value]="listaPaises | buscarPais: busqueda"
+            [value]="listaEstudiantes"
             [paginator]="true"
             [rows]="10"
             [first]="first"
@@ -45,20 +45,21 @@
                 <th class="px-1! py-2! border-b border-gray-300/40 w-1/4">Opciones</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-pais>
+        <ng-template pTemplate="body" let-estudiante>
             <tr>
                 <td class="px-1! py-1! border-b border-gray-300/40 ">
-                    {{ pais.nombre }}
+                    {{ estudiante.nombre }}
                 </td>
             
                 <td class="px-1! py-1! border-b border-gray-300/40">
                     <div class="flex gap-1 ">
-                        <button (click)="mostrarFormulario(pais)" 
-                        class="cursor-pointer"
-                        title="Actualizar">
+                        <button (click)="mostrarFormulario(estudiante)" 
+                            class="cursor-pointer"
+                            title="Actualizar"
+                        >
                             <i class="pi pi-pencil hover:bg-green-700 hover:text-white p-2! rounded-full"></i>
                         </button>
-                        <button (click)="eliminarPais(pais)" 
+                        <button (click)="eliminarEstudiante(estudiante)" 
                         class="cursor-pointer"
                         title="Eliminar">
                             <i class="pi pi-trash hover:bg-red-500 hover:text-white p-2! rounded-full"></i>
@@ -70,7 +71,7 @@
         </ng-template>
         <ng-template pTemplate="paginator">
             <div class="flex justify-end p-1 sticky bottom-0 bg-white">
-            <p-paginator [rows]="5" [totalRecords]="listaPaises.length" [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
+            <p-paginator [rows]="5" [totalRecords]="listaEstudiantes.length" [rowsPerPageOptions]="[10, 25, 50]"></p-paginator>
             </div>
         </ng-template>
         </p-table>
