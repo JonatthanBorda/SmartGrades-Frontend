@@ -38,13 +38,20 @@
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} entradas"
             (onPage)="pageChange($event)"
+            [lazy]="true"
+            (onSort)="sortChange($event)"
+            [sortField]="consulta.orderBy"
+            [sortOrder]="consulta.desc ? -1 : 1"
             scrollable="true"
             scrollHeight="flex"
             styleClass="h-full"
         >
         <ng-template pTemplate="header">
             <tr>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/4 ">Nombre</th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/4 " (click)="onSort('name')">
+                        Nombre 
+                        <p-sortIcon field="name"></p-sortIcon>
+                </th>
                 <th class="px-1! py-2! border-b border-gray-300/40 w-1/4">Opciones</th>
             </tr>
         </ng-template>
