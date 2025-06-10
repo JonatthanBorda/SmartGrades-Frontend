@@ -16,7 +16,7 @@ export class GenericoService<T,Tl> {
   private UpdateSource = new BehaviorSubject<T | null>(null);
   Updated$ = this.UpdateSource.asObservable();
 
-  private RegistroSource = new BehaviorSubject<Tl | null>(null);
+  private RegistroSource = new BehaviorSubject<Tl | T | null>(null);
   Registro$ = this.RegistroSource.asObservable();
 
   constructor(protected http: HttpClient) { }
@@ -49,7 +49,7 @@ export class GenericoService<T,Tl> {
     return this.http.get<ListaPaginada<T>>(`${this.api}/${this.endpoint}/filter?orderBy=${consulta.orderBy}&desc=${consulta.desc}&page=${consulta.page}&pageSize=${consulta.pageSize}&name=${consulta.name}`);
   }
 
-  notifyRegistro(entidad: Tl) {
+  notifyRegistro(entidad: Tl | T) {
     
     this.RegistroSource.next(entidad);
   }

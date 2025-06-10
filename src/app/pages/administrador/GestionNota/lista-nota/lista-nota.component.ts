@@ -160,9 +160,9 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
       });
   }
 
-  actualizarNota(nota: Nota) {
+  actualizarNota(nota: NotaComando) {
     this.servicioNota
-      .Actualizar(nota.id, nota)
+      .ActualizarNota(nota.id!, nota)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe({
         next: () => {

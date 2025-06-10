@@ -34,7 +34,7 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
 
   @Output() cerrar = new EventEmitter<boolean>();
   @Output() registrar = new EventEmitter<NotaComando>();
-  @Output() actualizar = new EventEmitter<Nota>();
+  @Output() actualizar = new EventEmitter<NotaComando>();
 
   formularioNota!: FormGroup;
   titulo: string = 'Registrar Nota';
@@ -82,15 +82,15 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
       return;
     }
   
-    const profesorSeleccionado = this.profesores.find(p => p.id === nota?.idTeacher);
-    const estudianteSeleccionado = this.estudiantes.find(d => d.id === nota?.idTeacher);
+    //const profesorSeleccionado = this.profesores.find(p => p.id === nota?.idTeacher);
+    //const estudianteSeleccionado = this.estudiantes.find(d => d.id === nota?.idTeacher);
 
     this.formularioNota.patchValue({
       id: nota?.id ?? '',
       nombre: nota?.name ?? '',
-      profesor: profesorSeleccionado ?? null,
-      estudiante: estudianteSeleccionado ?? null,
-      valor: nota?.value ?? ''
+      profesor: nota?.teacher ?? null,
+      estudiante: nota?.student ?? null,
+      valor: nota?.value ?? '',
     });
   }
   
@@ -104,7 +104,7 @@ export class FormularioNotaComponent implements OnInit, OnChanges {
     const formValues = this.formularioNota.value;
     
     if (this.nota) {
-      const notaActualizada: Nota = {
+      const notaActualizada: NotaComando = {
         id: formValues.id,
         name: formValues.nombre,
         idTeacher: formValues.profesor.id ?? '',
