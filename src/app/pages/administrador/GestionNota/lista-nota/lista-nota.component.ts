@@ -20,7 +20,7 @@ import { Profesor } from '../../../../core/models/profesor.model';
 import { Estudiante } from '../../../../core/models/estudiante.model';
 import { ListaPaginada } from '../../../../core/models/listaPaginada.model';
 import { consultaFiltrar } from '../../../../core/models/consultaFiltrar.model';
-import { ObtenerNombreEstudiantePipe } from '../../../../shared/pipes/obtener-nombre-estudiante.pipe';
+
 
 @Component({
   selector: 'app-lista-nota',
@@ -34,8 +34,7 @@ import { ObtenerNombreEstudiantePipe } from '../../../../shared/pipes/obtener-no
     InputTextModule,
     PaginatorModule,
     FormsModule,
-    FormularioNotaComponent,
-    ObtenerNombreEstudiantePipe
+    FormularioNotaComponent
   ],
   templateUrl: './lista-nota.component.html',
   styleUrl: './lista-nota.component.css',
@@ -227,5 +226,27 @@ export class ListaNotaComponent implements OnInit, OnDestroy {
   
     this.cargarConFiltro();
   }
+
+  sortChange(event: { field: string, order: number }) {
+    this.consulta.orderBy = event.field;
+    // order: 1 = ascendente, -1 = descendente, 0 = sin orden
+    this.consulta.desc = event.order === -1;
+    this.consulta.page = 1; // Reinicia a la primera página al ordenar
+
+    this.cargarConFiltro();
+  }
+
+  onSort(field: string) {
+    if (this.consulta.orderBy === field) {
+      this.consulta.desc = !this.consulta.desc;
+    } else {
+      this.consulta.orderBy = field;
+      this.consulta.desc = false; // Por defecto ascendente
+    }
+    this.consulta.page = 1;
+    this.cargarConFiltro();
+  }
+
+
 }
 

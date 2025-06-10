@@ -42,16 +42,44 @@
             [showCurrentPageReport]="true"
             currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} entradas"
             (onPage)="pageChange($event)"
+            [lazy]="true"
+            (onSort)="sortChange($event)"
+            [sortField]="consulta.orderBy"
+            [sortOrder]="consulta.desc ? -1 : 1"
             scrollable="true"
             scrollHeight="flex"
             styleClass="h-full"
         >
         <ng-template pTemplate="header">
             <tr>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Nombre</th>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Profesor</th>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Estudiante</th>
-                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 ">Valor</th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 "
+                    
+                    (click)="onSort('name')"
+                >
+                    Nombre
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 "
+                    
+                    (click)="onSort('idTeacher')"
+                >
+                    Profesor
+                    <p-sortIcon field="idTeacher"></p-sortIcon>
+                </th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 "
+                    
+                    (click)="onSort('idStudent')"
+                >
+                    Estudiante
+                    <p-sortIcon field="idStudent"></p-sortIcon>
+                </th>
+                <th class="px-2! py-2! border-b border-gray-300/40 w-3/12 "
+                    
+                    (click)="onSort('value')"
+                >
+                    Valor
+                    <p-sortIcon field="value"></p-sortIcon>
+                </th>
                 <th class="px-1! py-2! border-b border-gray-300/40 w-3/12">Opciones</th>
             </tr>
         </ng-template>
@@ -66,7 +94,7 @@
                 </td>
 
                 <td class="px-1! py-1! border-b border-gray-300/40 ">
-                    {{ nota.idStudent  }}
+                    {{ nota.idStudent }}
                 </td>
 
                 <td class="px-1! py-1! border-b border-gray-300/40 ">

@@ -11,13 +11,13 @@ export const cargandoInterceptor: HttpInterceptorFn = (req, next) => {
   if (servicioAutenticacion.token) {
     cargando.mostrar();
   }else {
-    cargando.mostrarInvitado();
+    //cargando.mostrarInvitado();
   }
 
   // Mostrar la solicitud en la consola
   //console.log('Solicitud HTTP:', req.url);
 
-  //cargando.mostrar();
+  cargando.mostrar();
 
   return next(req).pipe(
     finalize(() => {
@@ -26,6 +26,7 @@ export const cargandoInterceptor: HttpInterceptorFn = (req, next) => {
           cargando.ocultar();
           cargando.ocultarInvitado();
         }else {
+          cargando.ocultar();
           cargando.ocultarInvitado();
         }
       }, 500); // 500ms de retraso

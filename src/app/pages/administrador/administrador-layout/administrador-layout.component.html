@@ -17,11 +17,11 @@
         <!-- Contenido dinámico cargado en el router-outlet -->
         <div class="flex-grow bg-white overflow-auto relative p-3! rounded-xl shadow-md h-full">
             <router-outlet></router-outlet>
-            
+            @if (this.cargando()) {
+                <app-pagina-de-carga />
+            }
         </div>
 
-        @if (this.cargando()) {
-            <app-pagina-de-carga />
-        }
+        
     </div>
 </div>
