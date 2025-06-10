@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, WritableSignal } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AutenticacionService } from '../../../core/services/autenticacion.service';
 import { CargandoService } from '../../../core/services/cargando.service';
 import { PaginaDeCargaComponent } from "../../extras/pagina-de-carga/pagina-de-carga.component";
 import { MenuLateralAdministradorComponent } from '../../../shared/components/menu-lateral-administrador/menu-lateral-administrador.component';
@@ -26,7 +25,6 @@ export class AdministradorLayoutComponent implements OnInit {
   cargando!: WritableSignal<boolean>;
 
   constructor(
-    private autenticacionServicio: AutenticacionService,
     private cargandoService: CargandoService,
     private cdr: ChangeDetectorRef,
     private router: Router,
@@ -36,14 +34,7 @@ export class AdministradorLayoutComponent implements OnInit {
 
     this.cargando = this.cargandoService.cargando;
 
-    if (this.autenticacionServicio.token) {
-      this.autenticacionServicio.DatosUsuario().subscribe({
-        error: () => {
-          this.autenticacionServicio.cerrarSesion();
-          this.router.navigate(['/inicio']);
-        }
-      });
-    }
+    
   }
 
   toggleMenu() {

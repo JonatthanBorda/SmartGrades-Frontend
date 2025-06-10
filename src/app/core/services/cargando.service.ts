@@ -1,10 +1,11 @@
 import { Injectable, signal } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CargandoService {
+
+  carg: string = 'Cargando...';
 
   cargando = signal<boolean>(false);
 

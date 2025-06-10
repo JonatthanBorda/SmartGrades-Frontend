@@ -147,7 +147,7 @@ export class ListaProfesorComponent implements OnInit, OnDestroy {
 
         this.ocultarFormulario();
       },
-      })
+    })
   }
 
   eliminarProfesor(profesor: Profesor) {
