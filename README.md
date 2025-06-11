@@ -1,6 +1,6 @@
-# Frontend - Gestión de Series Animadas
+# SmartGrades - Frontend
 
-Este es el repositorio del frontend de la aplicación de gestión de series animadas, desarrollado con **Angular 19**. La aplicación permite realizar operaciones CRUD sobre series y está diseñada con una estructura modular clara y bien organizada.
+Este es el repositorio del frontend de la aplicación de SmartGrade, desarrollado con **Angular 19**. La aplicación permite realizar operaciones CRUD sobre las entidades de Estudiante, Profesor y Nota y está diseñada con una estructura modular clara y bien organizada.
 
 ## 📁 Estructura del Proyecto
 
@@ -16,7 +16,6 @@ El proyecto sigue una estructura modular para facilitar la escalabilidad y el ma
   - `menu-lateral-administrador/`
   - `encabezado-administrador/`
   - `encabezado-invitado/`
-  - `tarjeta-pelicula/`
 
 - **`src/app/environments`**: Configuración de entornos:
   - `environment.development.ts`: Variables para el entorno de desarrollo.
@@ -24,7 +23,7 @@ El proyecto sigue una estructura modular para facilitar la escalabilidad y el ma
   - `environment.ts`: Configuración general del entorno.
  
  ```
-FRONTENDGESTIONDETAREAS/
+SMARTGRADES-FRONTEND/
 │-- .github/workflows/        # Configuraciones para CI/CD en GitHub Actions
 │   ├── deploy.yaml           # Configuración para despliegue en GitHub Pages
 │
@@ -68,8 +67,8 @@ FRONTENDGESTIONDETAREAS/
 
 ### 1️⃣ Clonar el repositorio
 ```sh
-    git clone https://github.com/Nayid4/FrontendGestionDeSeriesAnimadasAngular.git
-    cd FrontendGestionDeSeriesAnimadasAngular
+    git clone https://github.com/JonatthanBorda/SmartGrades-Frontend.git
+    cd SmartGrades-Frontend
 ```
 
 ### 2️⃣ Instalar dependencias
